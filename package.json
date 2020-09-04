@@ -1,0 +1,42 @@
+{
+  "name": "kitchen_hero",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "predeploy": "npm audit",
+    "deploy": "git push heroku master",
+    "test": "mocha --require test/setup.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "postgrator --config postgrator-config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kayleighkat98/kitchen-hero.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kayleighkat98/express-boilerplate2/issues"
+  },
+  "homepage": "https://github.com/kayleighkat98/express-boilerplate2#readme",
+  "dependencies": {
+    "cores": "^0.8.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.1.0",
+    "knex": "^0.21.5",
+    "morgan": "^1.10.0",
+    "pg": "^8.3.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.1.1",
+    "nodemon": "^2.0.4",
+    "postgrator-cli": "^3.2.0",
+    "supertest": "^4.0.2"
+  }
+}

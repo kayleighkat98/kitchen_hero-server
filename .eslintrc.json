@@ -1,0 +1,10 @@
+
+{
+"parserOptions": {
+  "ecmaVersion": 2017
+},
+"globals": {
+    "supertest": true,
+    "expect": true
+  }
+}
