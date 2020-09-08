@@ -3,38 +3,44 @@ const { expect } = require("chai")
 const ePantryService = require('../src/epantry-service')
 const knex = require('knex')
 
-describe.only (`ePantry service object`, function () {
+describe (`ePantry service object`, function () {
     let db
     //SAMPLE
     let testIngredients = [
         {   
+            add_date: '2020-09-04',
+            ingredient_id : 1,
             ingredient : 'Apples',
-            add_date: '2020-08-31',
             quantity: '20',
         },
         {
+            add_date: '2020-09-04',
+            ingredient_id : 2,
             ingredient : 'Soda',
-            add_date: '2020-06-20',
             quantity: '20',
         },
         {
+            add_date: '2020-09-04',
+            ingredient_id : 3,
             ingredient : 'Grapes',
-            add_date: '2020-05-05',
             quantity: '20',
         },
         {
+            add_date: '2020-09-04',
+            ingredient_id : 4,
             ingredient : 'Baking Powder',
-            add_date: '2020-04-05',
             quantity: '20',
         },
         {
+            add_date: '2020-09-04',
+            ingredient_id : 5,
             ingredient : 'Carrots',
-            add_date: '2020-03-05',
             quantity: '20',
         },
         {
+            add_date: '2020-09-04T05:00:00.000Z',
+            ingredient_id : 6,
             ingredient : 'Tangerine',
-            add_date: '2020-02-05',
             quantity: '20',
         }
     ]
@@ -51,7 +57,7 @@ describe.only (`ePantry service object`, function () {
             .insert(testIngredients)
     })
     //AFTER//
-    after(() => db.destroy())
+    afterEach(() => db.destroy())
     //TESTS//
     it (`resolves all ingredients from epantry`, () =>{
         return ePantryService.getAllIngredients(db)

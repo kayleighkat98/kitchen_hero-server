@@ -1,11 +1,11 @@
 CREATE TYPE measurment_type AS ENUM (
     /*switch from singular to plural based on quantity*/
-    'units',
     'pounds',
     'cups',
     'gallons',
-    'ounces',
-    'fluid-ounces'
+    'liters',
+    'ounces'
+
 );
 
 ALTER TABLE epantry

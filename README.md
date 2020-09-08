@@ -24,3 +24,21 @@ Run the tests `npm test`
 ## Deploying
 
 When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+
+//Current version notes//
+The flow of control will go as follows:
+
+    1-We start the server with npm start aka
+    node ./src/server.js
+
+    2-The server.js file requires the app instance from the app.js file
+
+    3-The app.js file creates the express instance, app and exports it
+
+    4-The server.js file creates the Knex instance
+    
+    5-The server.js file attaches the Knex instance to the app as a property called 'db'
+    
+    6-The server.js tells the app to start listening on a port number
+    
+    7-Any request handling middleware can now read the 'db' property on the app to get the Knex instance
