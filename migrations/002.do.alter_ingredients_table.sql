@@ -8,6 +8,6 @@ CREATE TYPE measurment_type AS ENUM (
 
 );
 
-ALTER TABLE epantry
+ALTER TABLE ingredients
     ADD COLUMN 
         quantity_type measurment_type;

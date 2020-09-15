@@ -1,9 +1,9 @@
 require('dotenv').config()
 const { expect } = require("chai")
-const ePantryService = require('../src/epantry-service')
+const IngredientsService = require('../src/ingredients-service')
 const knex = require('knex')
 
-describe (`ePantry service object`, function () {
+describe (`Ingredients service object`, function () {
     let db
     //SAMPLE
     let testIngredients = [
@@ -17,31 +17,31 @@ describe (`ePantry service object`, function () {
             add_date: '2020-09-04',
             ingredient_id : 2,
             ingredient : 'Soda',
-            quantity: '20',
+            quantity: '2',
         },
         {
             add_date: '2020-09-04',
             ingredient_id : 3,
             ingredient : 'Grapes',
-            quantity: '20',
+            quantity: '10',
         },
         {
             add_date: '2020-09-04',
             ingredient_id : 4,
             ingredient : 'Baking Powder',
-            quantity: '20',
+            quantity: '5',
         },
         {
             add_date: '2020-09-04',
             ingredient_id : 5,
             ingredient : 'Carrots',
-            quantity: '20',
+            quantity: '6',
         },
         {
-            add_date: '2020-09-04T05:00:00.000Z',
+            add_date: '2020-09-04',
             ingredient_id : 6,
             ingredient : 'Tangerine',
-            quantity: '20',
+            quantity: '1',
         }
     ]
     //BEFORE//
@@ -53,14 +53,14 @@ describe (`ePantry service object`, function () {
     })
     before(() => {
         return db 
-            .into('epantry')
+            .into('ingredients')
             .insert(testIngredients)
     })
     //AFTER//
     afterEach(() => db.destroy())
     //TESTS//
-    it (`resolves all ingredients from epantry`, () =>{
-        return ePantryService.getAllIngredients(db)
+    it (`resolves all ingredients from ingredients`, () =>{
+        return IngredientsService.getAllIngredients(db)
             .then(actual => { //expect to fail because data is different
                 expect(actual).to.eql(testIngredients)
             })
