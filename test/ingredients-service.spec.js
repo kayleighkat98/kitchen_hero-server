@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { expect } = require("chai")
-const IngredientsService = require('../src/ingredients-service')
+const IngredientsService = require('../src/ingredients/ingredients-service')
 const knex = require('knex')
 
 describe (`Ingredients service object`, function () {

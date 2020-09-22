@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const app = express();
 const IngredientsRouter = require('./ingredients/ingredients-router');
+//const {CLIENT_ORIGIN} = require('./config');
 
 //MIDDLEWARE//
 const morganOption = (NODE_ENV === 'production')
@@ -13,7 +14,10 @@ const morganOption = (NODE_ENV === 'production')
   : 'common';
 app.use(morgan(morganOption));
 app.use(helmet());
-app.use(cors());
+// app.use(
+//   cors({
+//     origin: CLIENT_ORIGIN
+//   }));
 
 //ROUTES//
 app.use('/api/ingredients', IngredientsRouter);
