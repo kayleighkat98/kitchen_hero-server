@@ -10,7 +10,7 @@ const uuid = require
 const serializeIngredients = ingredient => ({
   ingredient_id: ingredient.ingredient_id,
   ingredient: xss(ingredient.ingredient),
-  add_date: ingredient.add_date,
+  add_date: ingredient.add_date.toString(),
   quantity: xss(ingredient.quantity),
   quantity_type: ingredient.quantity_type
 });
