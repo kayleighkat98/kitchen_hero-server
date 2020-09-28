@@ -1,6 +1,6 @@
 
 
-INSERT INTO ingredients (ingredient, quantity, quantity_type)
+INSERT INTO ingredients (name, quantity, quantity_type)
 VALUES  
     ('Apples', 20, 'pounds' ),
     ('Soda', 2, 'liters' ),

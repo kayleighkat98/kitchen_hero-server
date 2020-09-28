@@ -10,37 +10,37 @@ describe (`Ingredients service object`, function () {
         {   
             add_date: '2020-09-04',
             ingredient_id : 1,
-            ingredient : 'Apples',
+            name : 'Apples',
             quantity: '20',
         },
         {
             add_date: '2020-09-04',
             ingredient_id : 2,
-            ingredient : 'Soda',
+            name : 'Soda',
             quantity: '2',
         },
         {
             add_date: '2020-09-04',
             ingredient_id : 3,
-            ingredient : 'Grapes',
+            name : 'Grapes',
             quantity: '10',
         },
         {
             add_date: '2020-09-04',
             ingredient_id : 4,
-            ingredient : 'Baking Powder',
+            name : 'Baking Powder',
             quantity: '5',
         },
         {
             add_date: '2020-09-04',
             ingredient_id : 5,
-            ingredient : 'Carrots',
+            name : 'Carrots',
             quantity: '6',
         },
         {
             add_date: '2020-09-04',
             ingredient_id : 6,
-            ingredient : 'Tangerine',
+            name : 'Tangerine',
             quantity: '1',
         }
     ]

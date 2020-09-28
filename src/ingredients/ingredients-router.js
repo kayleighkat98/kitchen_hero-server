@@ -9,7 +9,7 @@ const uuid = require
 
 const serializeIngredients = ingredient => ({
   ingredient_id: ingredient.ingredient_id,
-  ingredient: xss(ingredient.ingredient),
+  name: xss(ingredient.name),
   add_date: ingredient.add_date.toString(),
   quantity: xss(ingredient.quantity),
   quantity_type: ingredient.quantity_type
@@ -27,8 +27,8 @@ IngredientsRouter
   })
   .post(jsonParser, async (req, res, next) => {
     const db = req.app.get('db');
-    const { ingredient, quantity, quantity_type } = req.body;
-    let newIngredient = {ingredient, quantity, quantity_type};
+    const { name, quantity, quantity_type } = req.body;
+    let newIngredient = {name, quantity, quantity_type};
 
     for (const [key, value] of Object.entries(newIngredient)) {
       if (value === null) {
