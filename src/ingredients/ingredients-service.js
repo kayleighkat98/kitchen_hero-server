@@ -3,6 +3,12 @@ const IngredientsService = {
         return knex.select('*').from('ingredients')
     },
     
+    getMeasurments(knex){
+        return knex
+            .select('quantity_type')
+            .from('ingredients')
+    },
+
     insert(knex, newIngredient) {
         return knex
           .insert(newIngredient)

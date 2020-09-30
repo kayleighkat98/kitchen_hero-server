@@ -15,6 +15,8 @@ const serializeIngredients = ingredient => ({
   quantity_type: ingredient.quantity_type
 });
 
+
+
 IngredientsRouter
   .route('/')
   .get((req, res, next) => {
@@ -22,6 +24,10 @@ IngredientsRouter
     IngredientsService.list(knexInstance)
       .then(ingredients => {
         res.json(ingredients.map(serializeIngredients));
+      })
+    IngredientsService.getMeasurments(knexInstance)
+      .then(types=> {
+        res.json(types);
       })
       .catch(next);
   })
