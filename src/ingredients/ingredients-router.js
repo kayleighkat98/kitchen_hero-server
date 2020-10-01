@@ -11,6 +11,7 @@ const serializeIngredients = ingredient => ({
   ingredient_id: ingredient.ingredient_id,
   name: xss(ingredient.name),
   add_date: ingredient.add_date.toString(),
+  expiration_date: ingredient.add_date.toString(),
   quantity: xss(ingredient.quantity),
   quantity_type: ingredient.quantity_type
 });
@@ -19,15 +20,11 @@ const serializeIngredients = ingredient => ({
 
 IngredientsRouter
   .route('/')
-  .get((req, res, next) => {
+  .get((req, res, next) => {//get ingredients
     const knexInstance = req.app.get('db');
     IngredientsService.list(knexInstance)
       .then(ingredients => {
         res.json(ingredients.map(serializeIngredients));
-      })
-    IngredientsService.getMeasurments(knexInstance)
-      .then(types=> {
-        res.json(types);
       })
       .catch(next);
   })
@@ -54,6 +51,16 @@ IngredientsRouter
     }
   })
 ;
+IngredientsRouter
+  .route('/')
+  .get((req,res, next) =>{
+    const knexInstance = req.app.get('db');
+    IngredientsService.getMeasurments(knexInstance)
+      .then(types=> {
+        res.json(types);
+      })
+      .catch(next);
+  })
 
 IngredientsRouter
   .route('/:ingredient_id')
