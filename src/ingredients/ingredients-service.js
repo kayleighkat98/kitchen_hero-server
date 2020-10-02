@@ -9,6 +9,13 @@ const IngredientsService = {
             .from('ingredients')
     },
 
+    getExpired(knex){
+        return knex 
+            .select ('*')
+            .from ('ingredients')
+            .where ('expiration_date' > 'current_date')
+    },
+
     insert(knex, newIngredient) {
         return knex
           .insert(newIngredient)
