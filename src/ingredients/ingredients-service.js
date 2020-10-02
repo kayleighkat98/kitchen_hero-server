@@ -13,7 +13,9 @@ const IngredientsService = {
         return knex 
             .select ('*')
             .from ('ingredients')
-            .where ('expiration_date' > 'current_date')
+            .whereNull('expiration_date')
+            .orWhere ('expiration_date', '>=', new Date())
+           
     },
 
     insert(knex, newIngredient) {

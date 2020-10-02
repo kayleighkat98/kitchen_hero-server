@@ -52,16 +52,16 @@ IngredientsRouter
   })
 ;
 IngredientsRouter
-  .route('/')
+  .route('/expired')
   .get((req,res, next) =>{
     const knexInstance = req.app.get('db');
-    IngredientsService.getMeasurments(knexInstance)
+    IngredientsService.getExpired(knexInstance)
       .then(types=> {
         res.json(types);
       })
       .catch(next);
   })
-
+;
 IngredientsRouter
   .route('/:ingredient_id')
   .all((req, res, next) => {
