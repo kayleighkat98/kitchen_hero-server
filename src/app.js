@@ -16,19 +16,19 @@ app.use(morgan(morganOption));
 app.use(helmet());
 
 
-  var whitelist = ['http://localhost:3000', 'https://kitchen-hero.kayleighkat98.vercel.app', 'https://kitchen-hero.vercel.app']
-  var corsOptions = {
-    origin: function (origin, callback) {
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
+const whitelist = ['https://kitchen-hero.kayleighkat98.vercel.app', 'https://kitchen-hero.vercel.app']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
     }
   }
+}
 
 
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 
 //ROUTES//
