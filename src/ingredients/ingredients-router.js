@@ -30,8 +30,8 @@ IngredientsRouter
   })
   .post(jsonParser, async (req, res, next) => {
     const db = req.app.get('db');
-    const { name, quantity, quantity_type } = req.body;
-    let newIngredient = {name, quantity, quantity_type};
+    const { name, quantity, quantity_type, expiration_date} = req.body;
+    let newIngredient = {name, quantity, quantity_type, expiration_date};
 
     for (const [key, value] of Object.entries(newIngredient)) {
       if (value === null) {
