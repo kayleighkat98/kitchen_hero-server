@@ -13,7 +13,7 @@ const IngredientsService = {
         return knex 
             .select ('*')
             .from ('ingredients')
-            .where ('expiration_date', '>=', new Date())
+            .where ('expiration_date', '<=', new Date())
            
     },
 
