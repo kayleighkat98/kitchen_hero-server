@@ -16,7 +16,7 @@ app.use(morgan(morganOption));
 app.use(helmet());
 
 
-const whitelist = ['https://kitchen-hero.kayleighkat98.vercel.app', 'https://kitchen-hero.vercel.app']
+const whitelist = ['http://localhost:3000','https://kitchen-hero.kayleighkat98.vercel.app', 'https://kitchen-hero.vercel.app']
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
