@@ -41,45 +41,7 @@ const UserService = {
       username: user.username,
     };
   },
-  populateUserWords(db, user_id) {
-    return db.transaction(async (trx) => {
-      const [languageId] = await trx
-        .into("language")
-        .insert([{ name: "Latin", user_id }], ["id"]);
 
-      // when inserting words,
-      // we need to know the current sequence number
-      // so that we can set the `next` field of the linked language
-      const seq = await db.from("word_id_seq").select("last_value").first();
-
-      const languageWords = [
-        ["hello", "salve", 2],
-        ["goodbye", "vale", 3],
-        ["name", "nomine", 4],
-        ["what", "quid", 5],
-        ["how", "quam", 6],
-        ["good", "bonum", 7],
-        ["bad", "malus", 8],
-        ["thank", "gratia", 9],
-        ["please", "obsecro", 10],
-        ["bathroom", "balneo", null],
-      ];
-
-      const [languageHeadId] = await trx.into("word").insert(
-        languageWords.map(([original, translation, nextInc]) => ({
-          language_id: languageId.id,
-          original,
-          translation,
-          next: nextInc ? Number(seq.last_value) + nextInc : null,
-        })),
-        ["id"]
-      );
-
-      await trx("language").where("id", languageId.id).update({
-        head: languageHeadId.id,
-      });
-    });
-  },
 };
 
 module.exports = UserService;
