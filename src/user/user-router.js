@@ -9,17 +9,16 @@ userRouter
   .post('/', jsonBodyParser, async (req, res, next) => {
     const { password, username, name } = req.body
 
-    for (const field of ['name', 'username', 'password'])
+    for (const field of ['name', 'username', 'password']){
       if (!req.body[field])
         return res.status(400).json({
           error: `Missing '${field}' in request body`
-        })
-
+        });
+    }
     try {
       const passwordError = UserService.validatePassword(password)
 
-      if (passwordError)
-        return res.status(400).json({ error: passwordError })
+      if (passwordError) return res.status(400).json({ error: passwordError })
 
       const hasUserWithUserName = await UserService.hasUserWithUserName(
         req.app.get('db'),
@@ -42,10 +41,6 @@ userRouter
         newUser
       )
 
-      await UserService.populateUserWords(
-        req.app.get('db'),
-        user.id
-      )
 
       res
         .status(201)
