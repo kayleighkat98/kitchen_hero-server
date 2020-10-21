@@ -6,6 +6,7 @@ const jsonParser = express.json();
 const {sanitizeFields} = require('../utils');
 const xss = require('xss')
 const uuid = require
+const { requireAuth } = require("../middleware/jwt-auth");
 
 const serializeIngredients = ingredient => ({
   ingredient_id: ingredient.ingredient_id,
@@ -16,10 +17,18 @@ const serializeIngredients = ingredient => ({
   quantity_type: ingredient.quantity_type
 });
 
+IngredientsRouter.use(requireAuth).use(async (req, next) => {
+  try {
+    const ingredients = await IngredientsService.getUsersIngredients(
+      req.app.get("db"),
+      req.user.id
+    );
+    req.ingredients = ingredients;
+    next();
+  } catch (error) {next(error);}
+});
 
-
-IngredientsRouter
-  .route('/')
+IngredientsRouter.route('/')
   .get((req, res, next) => {//get ingredients
     const knexInstance = req.app.get('db');
     IngredientsService.list(knexInstance)
@@ -51,8 +60,7 @@ IngredientsRouter
     }
   })
 ;
-IngredientsRouter
-  .route('/expired')
+IngredientsRouter.route('/expired')
   .get((req,res, next) =>{
     const knexInstance = req.app.get('db');
     IngredientsService.getExpired(knexInstance)
@@ -62,8 +70,7 @@ IngredientsRouter
       .catch(next);
   })
 ;
-IngredientsRouter
-  .route('/:ingredient_id')
+IngredientsRouter.route('/:ingredient_id')
   .all((req, res, next) => {
     IngredientsService.findById(req.app.get('db'), req.params.ingredient_id)
       .then(ingredients => {
