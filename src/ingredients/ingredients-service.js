@@ -1,4 +1,11 @@
 const IngredientsService = {
+    getUsersIngredients(knex, user_id) {
+        return knex
+            .select('*')
+            .from('ingredients')
+            .where('ingredients.user_id', user_id)
+    },
+
     list(knex) {
         return knex.select('*').from('ingredients')
     },
@@ -9,12 +16,12 @@ const IngredientsService = {
             .from('ingredients')
     },
 
-    getExpired(knex){
+    getExpired(knex, user_id){
         return knex 
             .select ('*')
             .from ('ingredients')
-            .where ('expiration_date', '<=', new Date())
-           
+            .where('ingredients.user_id', user_id)
+            .andWhere ('expiration_date', '<=', new Date())    
     },
 
     insert(knex, newIngredient) {
