@@ -19,23 +19,6 @@ app.use(
 app.use(cors());
 app.use(helmet());
 
-
-
-// const whitelist = ['http://localhost:3000','https://kitchen-hero.kayleighkat98.vercel.app', 'https://kitchen-hero.vercel.app']
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
-
-
-// app.use(cors(corsOptions));
-
-
 //ROUTES//
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
@@ -56,3 +39,16 @@ app.use(function errorHandler(error, req, res, next) {
 
 
 module.exports = app;
+// const whitelist = ['http://localhost:3000','https://kitchen-hero.kayleighkat98.vercel.app', 'https://kitchen-hero.vercel.app']
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
+
+
+// app.use(cors(corsOptions));

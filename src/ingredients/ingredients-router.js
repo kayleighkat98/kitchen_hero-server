@@ -17,21 +17,10 @@ const serializeIngredients = ingredient => ({
   quantity_type: ingredient.quantity_type
 });
 
-IngredientsRouter.use(requireAuth).use(async (req, next) => {
-  try {
-    const ingredients = await IngredientsService.getUsersIngredients(
-      req.app.get("db"),
-      req.user.id
-    );
-    req.ingredients = ingredients;
-    next();
-  } catch (error) {next(error);}
-});
-
-IngredientsRouter.route('/')
+IngredientsRouter.use(requireAuth).route('/')
   .get((req, res, next) => {//get ingredients
     const knexInstance = req.app.get('db');
-    IngredientsService.list(knexInstance)
+    IngredientsService.getUsersIngredients(knexInstance,req.user.id)
       .then(ingredients => {
         res.json(ingredients.map(serializeIngredients));
       })
@@ -39,8 +28,8 @@ IngredientsRouter.route('/')
   })
   .post(jsonParser, async (req, res, next) => {
     const db = req.app.get('db');
-    const { name, quantity, quantity_type} = req.body;
-    let newIngredient = {name, quantity, quantity_type};
+    const { name, quantity, quantity_type, user_id} = req.body;
+    let newIngredient = {name, quantity, quantity_type, user_id};
 
     for (const [key, value] of Object.entries(newIngredient)) {
       if (value === null ) {
@@ -60,10 +49,10 @@ IngredientsRouter.route('/')
     }
   })
 ;
-IngredientsRouter.route('/expired')
+IngredientsRouter.use(requireAuth).route('/expired')
   .get((req,res, next) =>{
     const knexInstance = req.app.get('db');
-    IngredientsService.getExpired(knexInstance)
+    IngredientsService.getExpired(knexInstance,req.user.id)
       .then(types=> {
         res.json(types);
       })
