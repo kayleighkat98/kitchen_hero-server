@@ -1,12 +1,12 @@
 require('dotenv').config()
 const { expect } = require("chai")
-const IngredientsService = require('../src/ingredients-service')
+const IngredientsService = require('../src/ingredients/ingredients-service')
 const knex = require('knex')
 const app = require('../src/app')
 
 describe.only (`Ingredients Endpoints`, function () {
     let db
-  //BEFORE//
+
     before(() => {
         db = knex ({
             client: 'pg',
@@ -14,50 +14,37 @@ describe.only (`Ingredients Endpoints`, function () {
         })
         app.set('db', db)
     })
-    before('clean the table', () => db('ingredients').truncate())
-  //AFTER//
-    after('disconnect from db', () => db.destroy())
-  //TESTS//
-    context('Given ther are ingredients in the database',() => {
-      
-      const testIngredients = [
-          {   
-              add_date: '2020-09-04',
-              ingredient_id : 1,
-              name : 'Apples',
-              quantity: '20',
-          },
 
-          {   
-              add_date: '2020-09-04',
-              ingredient_id : 2,
-              name : 'Soda',
-              quantity: '2',
-          },
-          {
-              add_date: '2020-09-04',
-              ingredient_id : 3,
-              name : 'Grapes',
-              quantity: '10',
-          },
-          {
-              add_date: '2020-09-04',
-              ingredient_id : 4,
-              name : 'Baking Powder',
-              quantity: '5',
-          },
-          {
-              add_date: '2020-09-04',
-              ingredient_id : 5,
-              name : 'Carrots',
-              quantity: '6',
-          },
-          {
-              add_date: '2020-09-04',
-              ingredient_id : 6,
-              name : 'Tangerine',
-              quantity: '1',
-          }
+    before('clean the table', () => db('ingredients').truncate())
+
+    after('disconnect from db', () => db.destroy())
+    
+    context('Given there are ingredients in the database',() => {
+      const testIngredients = [
+        {   
+            ingredient_id : 1,
+            user_id: 1,
+            name : 'Apples',
+            expiration_date: null,
+            quantity: '20',
+            quantity_type: 'pounds'
+        },
+        {   
+            ingredient_id : 2,
+            user_id: 1,
+            name : 'Soda',
+            expiration_date: '2000-11-05',
+            quantity: '2',
+            quantity_type: 'liters'
+        },
+        {
+            ingredient_id : 3,
+            user_id: 1,
+            name : 'Grapes',
+            expiration_date: '2030-10-07',
+            quantity: '10',
+            quantity_type: 'ounces'
+        }
       ];
       beforeEach(() => {
         return db 
