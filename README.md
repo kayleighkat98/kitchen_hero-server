@@ -5,7 +5,7 @@ This is a boilerplate project used for starting new projects!
 
 ## Seed the database
 
-psql -U postgres -d kitchen_hero -f ./seeds/seed.ingredients.sql
+psql -U postgres -d kitchen_hero -f ./seeds/seed.tables.sql
 
 
 
