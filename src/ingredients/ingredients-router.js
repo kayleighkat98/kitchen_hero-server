@@ -12,7 +12,7 @@ const serializeIngredients = ingredient => ({
   ingredient_id: ingredient.ingredient_id,
   name: xss(ingredient.name),
   expiration_date: ingredient.expiration_date,
-  quantity: xss(ingredient.quantity),
+  quantity: ingredient.quantity,
   quantity_type: ingredient.quantity_type
 });
 
@@ -27,11 +27,11 @@ IngredientsRouter.use(requireAuth).route('/')
   })
   .post(jsonParser, async (req, res, next) => {
     const db = req.app.get('db');
-    const { name, quantity, quantity_type, user_id} = req.body;
-    let newIngredient = {name, quantity, quantity_type, user_id};
+    const { user_id, name, expiration_date, quantity, quantity_type} = req.body;
+    let newIngredient = {user_id, name, expiration_date, quantity, quantity_type};
 
     for (const [key, value] of Object.entries(newIngredient)) {
-      if (value === null ) {
+      if (!value) {
         return next({status: 400, message: `Missing '${key}' in request body`});
       }
     }

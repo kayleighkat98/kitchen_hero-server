@@ -46,7 +46,7 @@ function makeIngredients(user) {
         user_id: user.id,
         name : 'Apples',
         expiration_date: null,
-        quantity: '20',
+        quantity: 20,
         quantity_type: 'pounds'
     },
     {   
@@ -54,7 +54,7 @@ function makeIngredients(user) {
         user_id: user.id,
         name : 'Soda',
         expiration_date: '2000-11-05',
-        quantity: '2',
+        quantity: 2,
         quantity_type: 'liters'
     },
     {
@@ -62,7 +62,7 @@ function makeIngredients(user) {
         user_id: user.id,
         name : 'Grapes',
         expiration_date: '2030-10-07',
-        quantity: '10',
+        quantity: 10,
         quantity_type: 'ounces'
     }
   ]

@@ -49,4 +49,32 @@ describe (`Ingredients Endpoints`, function () {
             });
         }); 
     });
-})
+
+    /**
+     * @description Submit a new ingredient
+     **/
+    describe(`POST /api/ingredients`, () => {
+
+        beforeEach("insert users and ingredients", () => {
+            return helpers.seedUsersIngredients(
+                db,
+                testUsers
+            );
+            });
+
+        it(`responds with 400 required error when data is missing`, () => {
+        const postBody = {
+            test: 'test',
+        };
+
+        return supertest(app)
+            .post(`/api/ingredients`)
+            .set("Authorization", helpers.makeAuthHeader(testUser))
+            .send(postBody)
+            .expect({
+                message: "Missing 'user_id' in request body",
+                error: { status: 400, message: "Missing 'user_id' in request body" }
+            });
+        });
+    })
+});
