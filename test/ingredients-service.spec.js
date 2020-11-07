@@ -27,9 +27,6 @@ describe (`Ingredients Endpoints`, function () {
      * @description Get Ingredients for a user
      **/
     describe(`GET /api/ingredients`, () => {
-        const [userIngredients] = testIngredients.filter(
-            (ingredient) => ingredient.user_id === testUser.id
-        );
        
         beforeEach("insert users and ingredients", () => {
         return helpers.seedUsersIngredients(
@@ -55,9 +52,6 @@ describe (`Ingredients Endpoints`, function () {
      * @description Get Expired Ingredients for a user
      **/
     describe(`GET /api/ingredients/expired`, () => {
-        const [userIngredients] = testIngredients.filter(
-            (item) => item.user_id === testUser.id
-        );
        
         beforeEach("insert users and ingredients", () => {
         return helpers.seedUsersIngredients(
@@ -103,6 +97,31 @@ describe (`Ingredients Endpoints`, function () {
                 message: "Missing 'user_id' in request body",
                 error: { status: 400, message: "Missing 'user_id' in request body" }
             });
+        });
+    })
+    /**
+     * @description Delete a ingredient
+     **/
+    describe(`DELETE /api/ingredients`, () => {
+
+        beforeEach("insert users and ingredients", () => {
+            return helpers.seedUsersIngredients(
+                db,
+                testUsers,
+                testIngredients
+            );
+        });
+
+        it(`responds with 400 required error when data is missing`, () => {
+
+        return supertest(app)
+            .delete(`/api/ingredients/1`)
+            .set("Authorization", helpers.makeAuthHeader(testUser))
+            .expect(200)
+            .expect((res) => {
+                expect(res.body).to.be.a('string');
+                expect(res.body).to.eql('sucessfully deleted ingredient')
+                });
         });
     })
 });

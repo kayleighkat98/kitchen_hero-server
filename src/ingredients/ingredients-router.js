@@ -78,7 +78,7 @@ IngredientsRouter.route('/:ingredient_id')
   .delete(async (req, res, next) => {
     try {
       await IngredientsService.delete(req.app.get('db'), req.params.ingredient_id);
-      res.status(200).json({});
+      res.status(200).json(`sucessfully deleted ingredient`);
     } catch(err) {
       next(err);
     }
