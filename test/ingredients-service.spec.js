@@ -2,67 +2,51 @@ require('dotenv').config()
 const { expect } = require("chai")
 const IngredientsService = require('../src/ingredients/ingredients-service')
 const knex = require('knex')
+const app = require('../src/app')
+const { test } = require('mocha')
+const helpers = require("./test-helpers");
 
-describe (`Ingredients service object`, function () {
+describe (`Ingredients Endpoints`, function () {
     let db
-    //SAMPLE
-    let testIngredients = [
-        {   
-            add_date: '2020-09-04',
-            ingredient_id : 1,
-            name : 'Apples',
-            quantity: '20',
-        },
-        {
-            add_date: '2020-09-04',
-            ingredient_id : 2,
-            name : 'Soda',
-            quantity: '2',
-        },
-        {
-            add_date: '2020-09-04',
-            ingredient_id : 3,
-            name : 'Grapes',
-            quantity: '10',
-        },
-        {
-            add_date: '2020-09-04',
-            ingredient_id : 4,
-            name : 'Baking Powder',
-            quantity: '5',
-        },
-        {
-            add_date: '2020-09-04',
-            ingredient_id : 5,
-            name : 'Carrots',
-            quantity: '6',
-        },
-        {
-            add_date: '2020-09-04',
-            ingredient_id : 6,
-            name : 'Tangerine',
-            quantity: '1',
-        }
-    ]
-    //BEFORE//
-    before(() => {
-        db = knex ({
-            client: 'pg',
-            connection: process.env.TEST_DATABASE_URL,
-        })
-    })
-    before(() => {
-        return db 
-            .into('ingredients')
-            .insert(testIngredients)
-    })
-    //AFTER//
-    afterEach(() => db.destroy())
-    //TESTS//
-    it (`resolves all ingredients from ingredients`, () =>{
-        return IngredientsService.getAllIngredients(db)
-            .then(actual => { //expect to fail because data is different
-                expect(actual).to.eql(testIngredients)
-            })
-    })
+    const testUsers = helpers.makeUsersArray();
+    const [testUser] = testUsers;
+    const [...testIngredients] = helpers.makeIngredients(testUser);
+    
+    before("make knex instance", () => {
+        db = helpers.makeKnexInstance();
+        app.set("db", db);
+    });
+    
+    after("disconnect from db", () => db.destroy());
+
+    before("cleanup", () => helpers.cleanTables(db));
+  
+    afterEach("cleanup", () => helpers.cleanTables(db));
+    
+    /**
+     * @description Get languages for a user
+     **/
+    describe(`GET /api/ingredients`, () => {
+        const [userIngredients] = testIngredients.filter(
+            (item) => item.user_id === testUser.id
+        );
+       
+        beforeEach("insert users and ingredients", () => {
+        return helpers.seedUsersIngredients(
+            db,
+            testUsers,
+            testIngredients
+        );
+        });
+
+        it(`responds with 200 and user's ingredients`, () => {
+        return supertest(app)
+            .get(`/api/ingredients`)
+            .set("Authorization", helpers.makeAuthHeader(testUser))
+            .expect(200)
+            .expect((res) => {
+            expect(res.body).to.be.a('array');
+            });
+        }); 
+    });
 })

@@ -11,8 +11,7 @@ const { requireAuth } = require("../middleware/jwt-auth");
 const serializeIngredients = ingredient => ({
   ingredient_id: ingredient.ingredient_id,
   name: xss(ingredient.name),
-  add_date: ingredient.add_date.toString(),
-  expiration_date: ingredient.add_date.toString(),
+  expiration_date: ingredient.expiration_date,
   quantity: xss(ingredient.quantity),
   quantity_type: ingredient.quantity_type
 });
