@@ -16,6 +16,14 @@ ROUTES:(for each path, add to the end of the api url)
     one ingredient {GET, DELETE}
         '/api/ingredients/:id'
 ## Screenshot(s)
+![home](images/screenshots/home.png)
+![about](images/screenshots/about.png)
+![register](images/screenshots/register.png)
+![login](images/screenshots/login.png)
+![kitchen](images/screenshots/kitchen.png)
+![new](images/screenshots/new.png)
+![pantry](images/screenshots/pantry.png)
+![expired](images/screenshots/expired.png)
 ## Summary
 This is the API used by my app Kitchen-Hero. Along with basic user/auth routes and services, this api also stores ingredient information into an online pantry and uses knex instances to filter only expired ingredients to make it easy when cleaning your pantry.
 ## Technology
