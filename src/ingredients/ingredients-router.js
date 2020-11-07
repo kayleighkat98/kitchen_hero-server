@@ -31,7 +31,7 @@ IngredientsRouter.use(requireAuth).route('/')
     let newIngredient = {user_id, name, expiration_date, quantity, quantity_type};
 
     for (const [key, value] of Object.entries(newIngredient)) {
-      if (!value) {
+      if (!value && key !== expiration_date) {
         return next({status: 400, message: `Missing '${key}' in request body`});
       }
     }
