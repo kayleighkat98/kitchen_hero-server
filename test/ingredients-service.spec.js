@@ -24,11 +24,11 @@ describe (`Ingredients Endpoints`, function () {
     afterEach("cleanup", () => helpers.cleanTables(db));
     
     /**
-     * @description Get languages for a user
+     * @description Get Ingredients for a user
      **/
     describe(`GET /api/ingredients`, () => {
         const [userIngredients] = testIngredients.filter(
-            (item) => item.user_id === testUser.id
+            (ingredient) => ingredient.user_id === testUser.id
         );
        
         beforeEach("insert users and ingredients", () => {
@@ -46,10 +46,38 @@ describe (`Ingredients Endpoints`, function () {
             .expect(200)
             .expect((res) => {
             expect(res.body).to.be.a('array');
+            expect(res.body[0].ingredient_id).to.eql(1)
+            expect(res.body[0]).to.have.property('expiration_date').to.eql(null)
             });
         }); 
     });
+    /**
+     * @description Get Expired Ingredients for a user
+     **/
+    describe(`GET /api/ingredients/expired`, () => {
+        const [userIngredients] = testIngredients.filter(
+            (item) => item.user_id === testUser.id
+        );
+       
+        beforeEach("insert users and ingredients", () => {
+        return helpers.seedUsersIngredients(
+            db, 
+            testUsers,
+            testIngredients
+        );
+        });
 
+        it(`responds with 200 and user's ingredients`, () => {
+        return supertest(app)
+            .get(`/api/ingredients/expired`)
+            .set("Authorization", helpers.makeAuthHeader(testUser))
+            .expect(200)
+            .expect((res) => {
+            expect(res.body).to.be.a('array');
+            expect(res.body[0]).to.have.property('expiration_date').to.eql('2000-11-05')
+            });
+        }); 
+    });
     /**
      * @description Submit a new ingredient
      **/
