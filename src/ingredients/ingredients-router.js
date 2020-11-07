@@ -7,6 +7,7 @@ const {sanitizeFields} = require('../utils');
 const xss = require('xss')
 const uuid = require
 const { requireAuth } = require("../middleware/jwt-auth");
+const e = require('cors');
 
 const serializeIngredients = ingredient => ({
   ingredient_id: ingredient.ingredient_id,
@@ -31,7 +32,7 @@ IngredientsRouter.use(requireAuth).route('/')
     let newIngredient = {user_id, name, expiration_date, quantity, quantity_type};
 
     for (const [key, value] of Object.entries(newIngredient)) {
-      if (!value && key !== expiration_date) {
+     if (!value && key !== {expiration_date} ) {
         return next({status: 400, message: `Missing '${key}' in request body`});
       }
     }
