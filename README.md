@@ -1,23 +1,45 @@
-HEROKU URL:
-https://fierce-hollows-91839.herokuapp.com/ deployed to Heroku
 
-This is a boilerplate project used for starting new projects!
-
-## Seed the database
+KITCHEN-HERO
+## Link to the live project
+VERCEL URL:    https://kitchen-hero.kayleighkat98.vercel.app/
+HEROKU URL:    https://fierce-hollows-91839.herokuapp.com/ 
+## Documentation of the API.
+ROUTES:(for each path, add to the end of the api url)
+    login {POST}
+        '/api/auth'
+    user {POST}
+        '/api/user'
+    all ingredients {GET, POST}
+        '/api/ingredients'
+    all expired {GET} 
+        '/api/ingredients/expired'
+    one ingredient {GET, DELETE}
+        '/api/ingredients/:id'
+## Screenshot(s)
+## Summary
+This is the API used by my app Kitchen-Hero. Along with basic user/auth routes and services, this api also stores ingredient information into an online pantry and uses knex instances to filter only expired ingredients to make it easy when cleaning your pantry.
+## Technology
+REGULAR DEPENDENCIES:
+    bcryptjs
+    cors
+    dotenv
+    express
+    helmet
+    jsonwebtoken
+    knex
+    morgan
+    pg
+    postgrator-cli
+    xss
+DEV DEPENDENCIES:
+    chai
+    mocha
+    nodemon
+    supertest
+### Seed the database
 
 psql -U postgres -d kitchen_hero -f ./seeds/seed.tables.sql
 
 
 
-## Scripts
-
-Start the application `npm start`
-
-Start nodemon for the application `npm run dev`
-
-Run the tests `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
 
