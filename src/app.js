@@ -7,9 +7,7 @@ const { NODE_ENV } = require('./config');
 const IngredientsRouter = require('./ingredients/ingredients-router');
 const userRouter = require("./user/user-router");
 const authRouter = require("./auth/auth-router");
-
 const app = express();
-
 //MIDDLEWARE//
 app.use(
   morgan(NODE_ENV === "production" ? "tiny" : "common", {
@@ -18,7 +16,6 @@ app.use(
 );
 app.use(cors());
 app.use(helmet());
-
 //ROUTES//
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
@@ -36,19 +33,4 @@ app.use(function errorHandler(error, req, res, next) {
   console.error(error);
   res.status(500).json(response);
 });
-
-
 module.exports = app;
-// const whitelist = ['http://localhost:3000','https://kitchen-hero.kayleighkat98.vercel.app', 'https://kitchen-hero.vercel.app']
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
-
-
-// app.use(cors(corsOptions));

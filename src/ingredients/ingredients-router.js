@@ -8,17 +8,15 @@ const xss = require('xss')
 const uuid = require
 const { requireAuth } = require("../middleware/jwt-auth");
 const e = require('cors');
-
-const serializeIngredients = ingredient => ({
+const serializeIngredients = ingredient => ({//RUN XSS ON NECESARY FIELDS
   ingredient_id: ingredient.ingredient_id,
   name: xss(ingredient.name),
   expiration_date: ingredient.expiration_date,
   quantity: ingredient.quantity,
   quantity_type: ingredient.quantity_type
 });
-
-IngredientsRouter.use(requireAuth).route('/')
-  .get((req, res, next) => {//get ingredients
+IngredientsRouter.use(requireAuth).route('/')//ROUTES FOR INGREDIENTS
+  .get((req, res, next) => {//GET ALL INGREDIENTS
     const knexInstance = req.app.get('db');
     IngredientsService.getUsersIngredients(knexInstance,req.user.id)
       .then(ingredients => {
@@ -26,7 +24,7 @@ IngredientsRouter.use(requireAuth).route('/')
       })
       .catch(next);
   })
-  .post(jsonParser, async (req, res, next) => {
+  .post(jsonParser, async (req, res, next) => {//POST AN INGREDIENT
     const db = req.app.get('db');
     const { user_id, name, expiration_date, quantity, quantity_type} = req.body;
     let newIngredient = {user_id, name, expiration_date, quantity, quantity_type};
@@ -49,8 +47,8 @@ IngredientsRouter.use(requireAuth).route('/')
     }
   })
 ;
-IngredientsRouter.use(requireAuth).route('/expired')
-  .get((req,res, next) =>{
+IngredientsRouter.use(requireAuth).route('/expired')//ROUTES FOR EXPIRED ONLY INGREDIENTS
+  .get((req,res, next) =>{//GET ALL EXPIRED
     const knexInstance = req.app.get('db');
     IngredientsService.getExpired(knexInstance,req.user.id)
       .then(types=> {
@@ -59,8 +57,8 @@ IngredientsRouter.use(requireAuth).route('/expired')
       .catch(next);
   })
 ;
-IngredientsRouter.route('/:ingredient_id')
-  .all((req, res, next) => {
+IngredientsRouter.route('/:ingredient_id')//ROUTES FOR INDIVIDUAL INGREDIENTS
+  .all((req, res, next) => {//FIND INGREDIENT
     IngredientsService.findById(req.app.get('db'), req.params.ingredient_id)
       .then(ingredients => {
         if (!ingredients) {
@@ -73,17 +71,15 @@ IngredientsRouter.route('/:ingredient_id')
       })
       .catch(next);
   })
-  .get((req, res, next) => {
+  .get((req, res, next) => {//GET INGREDIENT
     res.json(serializeIngredients(res.ingredients));
   })
-  .delete(async (req, res, next) => {
+  .delete(async (req, res, next) => {//DELETE INGREDIENT
     try {
       await IngredientsService.delete(req.app.get('db'), req.params.ingredient_id);
       res.status(200).json(`sucessfully deleted ingredient`);
     } catch(err) {
       next(err);
     }
-  })
-
-
+  });
 module.exports = IngredientsRouter;

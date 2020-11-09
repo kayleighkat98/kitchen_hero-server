@@ -21,7 +21,7 @@ const IngredientsService = {
             .select ('*')
             .from ('ingredients')
             .where('ingredients.user_id', user_id)
-            .andWhere ('expiration_date', '<=', new Date())    
+            .andWhere ('expiration_date', '<=', new Date())//LIMITS ONLY EXPIRED
     },
 
     insert(knex, newIngredient) {

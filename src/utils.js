@@ -1,5 +1,4 @@
 const xss = require('xss');
-
 const sanitizeFields = obj => {
   const filtered = {};
   for (const [key, value] of Object.entries(obj)) {
@@ -7,7 +6,6 @@ const sanitizeFields = obj => {
   }
   return filtered;
 };
-
 module.exports = {
   sanitizeFields
 };
